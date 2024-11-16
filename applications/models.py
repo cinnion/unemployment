@@ -12,3 +12,6 @@ class JobApplication(models.Model):
 
     class Meta:
         db_table = 'job_applications'
+
+    def __str__(self):
+        return '{}: {} @ {}'.format(self.when, self.title, self.company)

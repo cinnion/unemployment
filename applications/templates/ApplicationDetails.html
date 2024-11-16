@@ -1,0 +1,26 @@
+{% extends "master.html" %}
+
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Application Details
+{% endblock %}
+
+{% block body %}
+    <h1>Application Detail</h1>
+    <form id="rendered-form" action="." method="post">
+        {% csrf_token %}
+
+        {{ form.when | as_crispy_field }}
+        {{ form.company | as_crispy_field }}
+        {{ form.title | as_crispy_field }}
+        {{ form.posting | as_crispy_field }}
+        {{ form.confirm | as_crispy_field }}
+        {{ form.notes | as_crispy_field }}
+        {{ form.active | as_crispy_field }}
+
+        <button class="form-submit">Save Application</button>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "master.html" %}
+
+{% block title %}
+Application Summary
+{% endblock %}
+
+{% block body %}
+    <h1>Applications Summary</h1>
+    <table id="applications-summary" border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>When</th>
+        <th>Company</th>
+        <th>Title</th>
+        <th>Active</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for app in applications %}
+        <tr>
+        <td>{{ app.id }}</td>
+        <td>{{ app.when }}</td>
+        <td>{{ app.company }}</td>
+        <td>{{ app.title }}</td>
+        <td>{{ app.active }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}
+
+{% block js %}
+$(document).ready(function(){
+    $('#applications-summary').DataTable({
+        "columnDefs": [{
+            "targets": [0],
+            "visible": false,
+            "searchable": false
+        }],
+        "order": [
+            [ 0, 'desc' ],
+        ],
+    });
+});
+{% endblock %}
