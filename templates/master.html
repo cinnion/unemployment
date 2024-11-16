@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{% static '/jquery-ui/1.14.1/themes/cupertino/jquery-ui.css' %}" rel="stylesheet" />
+    <link href="{% static '/jquery-ui/1.14.1/themes/cupertino/theme.css' %}" rel="stylesheet" />
+    <link href="{% static '/css/datatables.min.css' %}" rel="stylesheet" />
+    <script src="{% static '/jquery/3.7.1/jquery.min.js' %}"></script>
+    <script src="{% static '/jquery-ui/1.14.1/jquery-ui.min.js' %}"></script>
+    <script src="{% static '/js/datatables.min.js' %}"></script>
+
+    <script type="text/javascript">
+        {% block js %}
+        {% endblock %}
+    </script>
+</head>
+<body>
+    <nav>
+        <a href="{% url "homepage" %}">Home</a> |
+        <a href="{% url "applications:application-list" %}">Job Applications</a> |
+    </nav>
+    {% block subnav %}
+    {% endblock %}
+    
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

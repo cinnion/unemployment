@@ -15,7 +15,7 @@ def application_details(request, appid=None):
     if appid:
         app = get_object_or_404(JobApplication, pk=appid)
     else:
-        app = JobApplication();
+        app = JobApplication()
 
     form =  forms.EditApplication(request.POST or None, instance=app)
 

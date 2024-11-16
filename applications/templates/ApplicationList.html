@@ -4,7 +4,7 @@
 Application Summary
 {% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Applications Summary</h1>
     <table id="applications-summary" border="1">
     <thead>
@@ -14,17 +14,18 @@ Application Summary
         <th>Company</th>
         <th>Title</th>
         <th>Active</th>
-
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     {% for app in applications %}
         <tr>
         <td>{{ app.id }}</td>
-        <td>{{ app.when }}</td>
+        <td>{{ app.when | date:'Y-m-d'}}</td>
         <td>{{ app.company }}</td>
         <td>{{ app.title }}</td>
         <td>{{ app.active }}</td>
+        <td><a href="{% url 'applications:application-details' appid=app.id %}"><button>View/Edit</button></a></td>
         </tr>
     {% endfor %}
     </tbody>

@@ -7,9 +7,9 @@
     Application Details
 {% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Application Detail</h1>
-    <form id="rendered-form" action="." method="post">
+    <form id="rendered-form" method="post">
         {% csrf_token %}
 
         {{ form.when | as_crispy_field }}
