@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ajax_datatable',
     'crispy_bootstrap5',
     'crispy_forms',
     'applications',
