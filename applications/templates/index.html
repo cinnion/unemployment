@@ -1,0 +1,70 @@
+{% extends "master.html" %}
+
+{% block title %}
+Application Summary
+{% endblock %}
+
+{% block content %}
+    <h1>Applications Summary</h1>
+    <table id="jobapplications" border="1">
+    </table>
+{% endblock %}
+
+{% block js %}
+$(document).ready(function(){
+    $('#jobapplications').DataTable({
+        ajax: {
+            url: '/api/jobapplications/',
+            dataSrc: 'job_applications'
+        },
+        serverSide: true,
+        processing: true,
+        'columns': [
+            {
+                data: 'id',
+                name: 'id',
+                visible: false,
+                searchable: false,
+            },
+            {
+                data: 'when',
+                name: 'when',
+                title: 'When',
+            },
+            {
+                data: 'company',
+                name: 'company',
+                title: 'Company',
+            },
+            {
+                data: 'title',
+                name: 'title',
+                title: 'Job Title',
+            },
+            {
+                data: 'posting',
+                name: 'posting',
+                title: 'Job Posting',
+            },
+            {
+                data: 'confirm',
+                name: 'confirm',
+                title: 'Confirmation',
+            },
+            {
+                data: 'notes',
+                name: 'notes',
+                title: 'Notes',
+            },
+            {
+                data: 'active',
+                name: 'active',
+                title: 'Still active?',
+            },
+        ],
+        'order': [
+            [ 0, 'desc' ],
+        ],
+    });
+});
+{% endblock %}

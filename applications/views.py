@@ -25,3 +25,5 @@ def application_details(request, appid=None):
 
     return render(request, 'ApplicationDetails.html', {'form': form})
 
+def index(request):
+    return render(request, 'index.html')
