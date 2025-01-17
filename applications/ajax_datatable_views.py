@@ -16,11 +16,11 @@ class ApplicationsAjaxDatatableView(AjaxDatatableView):
     column_defs = [
         AjaxDatatableView.render_row_tools_column_def(),
         {'name': 'id', 'visible': False, },
-        {'name': 'when', 'visible': True, },
-        {'name': 'company', 'visible': True, },
+        {'name': 'when', 'visible': True, 'width': '100px', },
+        {'name': 'company', 'visible': True, 'width': '300px', },
         {'name': 'title', 'visible': True, },
-        {'name': 'active', 'visible': True, },
-        {'name': 'actions', 'title': 'Actions', 'placeholder': True, 'searchable': False, 'orderable': False, },
+        {'name': 'active', 'visible': True, 'width': '100px'},
+        {'name': 'actions', 'title': 'Actions', 'placeholder': True, 'searchable': False, 'orderable': False, 'width': '100px'},
     ]
 
     def customize_row(self, row, obj):

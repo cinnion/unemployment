@@ -2,14 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import JobApplication
 from . import forms
 
+
 def applications_list(request):
-    applications = JobApplication.objects.order_by('-when', '-id').all()
+    return render(request, 'ApplicationList.html')
 
-    context = {
-        'applications': applications,
-    }
-
-    return render(request, 'ApplicationList.html', context)
 
 def application_details(request, appid=None):
     if appid:
@@ -17,7 +13,7 @@ def application_details(request, appid=None):
     else:
         app = JobApplication()
 
-    form =  forms.EditApplication(request.POST or None, instance=app)
+    form = forms.EditApplication(request.POST or None, instance=app)
 
     if request.method == 'POST' and form.is_valid():
         form.save()
@@ -25,5 +21,3 @@ def application_details(request, appid=None):
 
     return render(request, 'ApplicationDetails.html', {'form': form})
 
-def index(request):
-    return render(request,'index.html')

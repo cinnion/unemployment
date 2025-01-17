@@ -6,43 +6,25 @@ Application Summary
 
 {% block content %}
     <h1>Applications Summary</h1>
-    <table id="applications-summary" border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>When</th>
-        <th>Company</th>
-        <th>Title</th>
-        <th>Active</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for app in applications %}
-        <tr>
-        <td>{{ app.id }}</td>
-        <td>{{ app.when | date:'Y-m-d'}}</td>
-        <td>{{ app.company }}</td>
-        <td>{{ app.title }}</td>
-        <td>{{ app.active }}</td>
-        <td><a href="{% url 'applications:application-details' appid=app.id %}"><button>View/Edit</button></a></td>
-        </tr>
-    {% endfor %}
-    </tbody>
+    <table id="applications-index" border="1">
     </table>
 {% endblock %}
 
 {% block js %}
 $(document).ready(function(){
-    $('#applications-summary').DataTable({
-        "columnDefs": [{
-            "targets": [0],
-            "visible": false,
-            "searchable": false
-        }],
-        "order": [
-            [ 0, 'desc' ],
-        ],
-    });
+    AjaxDatatableViewUtils.initialize_table(
+            $('#applications-index'),
+            "{% url 'applications:ajax_datatable_applications' %}",
+            {
+                // extra_options
+                processing: false,
+                autoWidth: false,
+                choices: true,
+                full_row_select: false,
+                scrollX: false
+            }, {
+                // extra_data
+            },
+        );
 });
 {% endblock %}
