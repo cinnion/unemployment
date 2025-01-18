@@ -30,11 +30,13 @@ $(document).ready(function(){
                 data: 'when',
                 name: 'when',
                 title: 'When',
+                width: '100px',
             },
             {
                 data: 'company',
                 name: 'company',
                 title: 'Company',
+                width: '300px',
             },
             {
                 data: 'title',
@@ -42,25 +44,18 @@ $(document).ready(function(){
                 title: 'Job Title',
             },
             {
-                data: 'posting',
-                name: 'posting',
-                title: 'Job Posting',
-            },
-            {
-                data: 'confirm',
-                name: 'confirm',
-                title: 'Confirmation',
-            },
-            {
-                data: 'notes',
-                name: 'notes',
-                title: 'Notes',
-            },
-            {
                 data: 'active',
                 name: 'active',
                 title: 'Still active?',
+                width: '100px',
             },
+            {
+                defaultContent: "Edit",
+                name: 'edit',
+                title: 'Actions',
+                width: '100px',
+                placeholder: true,
+            }
         ],
         'order': [
             [ 0, 'desc' ],
