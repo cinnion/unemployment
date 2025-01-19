@@ -1,0 +1,29 @@
+{
+  "name": "unemployment",
+  "version": "1.0.0",
+  "description": "A job application tracking app",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=webpack.config.js",
+    "watch": "npm run watch -- --watch",
+    "watch-poll": "npm run watch -- --watch-poll",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prod": "npm run development",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=webpack.config.js"
+  },
+  "author": "Doug Needham <douglas.w.needham@gmail.com>",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "webpack": "^5.97.1",
+    "webpack-bundle-tracker": "^3.1.1",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "datatables.net": "^2.2.1",
+    "datatables.net-jqui": "^2.2.1",
+    "jquery": "^3.7.1",
+    "jquery-ui": "^1.14.1",
+    "jquery-ui-themeroller": "^0.0.9"
+  }
+}
