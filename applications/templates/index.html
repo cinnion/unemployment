@@ -19,6 +19,7 @@ $(document).ready(function(){
         },
         serverSide: true,
         processing: true,
+        rowId: 'id',
         'columns': [
             {
                 data: 'id',
@@ -44,13 +45,31 @@ $(document).ready(function(){
                 title: 'Job Title',
             },
             {
+                data: 'posting',
+                name: 'posting',
+                title: 'Job Posting',
+                visible: false,
+            },
+            {
+                data: 'confirm',
+                name: 'confirm',
+                title: 'Confirmation',
+                visible: false,
+            },
+            {
+                data: 'notes',
+                name: 'notes',
+                title: 'Notes',
+                visible: false,
+            },
+            {
                 data: 'active',
                 name: 'active',
                 title: 'Still active?',
                 width: '100px',
             },
             {
-                defaultContent: "Edit",
+                defaultContent: '<a href="#" onclick="var id=this.closest(\'tr\').id; window.location.href=\'/applications/\' + id + \'/edit\';"><button>Edit</button></a>',
                 name: 'edit',
                 title: 'Actions',
                 width: '100px',
@@ -58,7 +77,8 @@ $(document).ready(function(){
             }
         ],
         'order': [
-            [ 0, 'desc' ],
+            [ 1, 'desc' ],
+            [ 2, 'asc' ],
         ],
     });
 });
