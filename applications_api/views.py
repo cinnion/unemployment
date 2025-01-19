@@ -76,7 +76,7 @@ class JobApplications(generics.GenericAPIView):
                     "status": "success",
                     "job_application": serializer.data,
                 },
-                status = status.HTTP_201_CREATED,
+                status=status.HTTP_201_CREATED,
             )
         else:
             return Response(
@@ -84,8 +84,9 @@ class JobApplications(generics.GenericAPIView):
                     "status": "fail",
                     "message": serializer.errors,
                 },
-                status = status.HTTP_400_BAD_REQUEST,
+                status=status.HTTP_400_BAD_REQUEST,
             )
+
 
 class JobApplicationDetail(generics.GenericAPIView):
     serializer_class = JobApplicationSerializer
@@ -105,7 +106,7 @@ class JobApplicationDetail(generics.GenericAPIView):
                     "status": "fail",
                     "message": f"Job Application with Id: {pk} not found",
                 },
-                status = status.HTTP_404_NOT_FOUND,
+                status=status.HTTP_404_NOT_FOUND,
             )
 
         serializer = self.serializer_class(job_application)
