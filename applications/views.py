@@ -3,13 +3,7 @@ from .models import JobApplication
 from . import forms
 
 def applications_list(request):
-    applications = JobApplication.objects.order_by('-when', '-id').all()
-
-    context = {
-        'applications': applications,
-    }
-
-    return render(request, 'ApplicationList.html', context)
+    return render(request, 'ApplicationList.html')
 
 def application_details(request, appid=None):
     if appid:
@@ -24,6 +18,3 @@ def application_details(request, appid=None):
         return redirect('applications:application-list')
 
     return render(request, 'ApplicationDetails.html', {'form': form})
-
-def index(request):
-    return render(request, 'index.html')

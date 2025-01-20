@@ -1,4 +1,5 @@
 {% extends "master.html" %}
+{% load static %}
 
 {% block title %}
 Application Summary
@@ -6,43 +7,10 @@ Application Summary
 
 {% block content %}
     <h1>Applications Summary</h1>
-    <table id="applications-summary" border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>When</th>
-        <th>Company</th>
-        <th>Title</th>
-        <th>Active</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for app in applications %}
-        <tr>
-        <td>{{ app.id }}</td>
-        <td>{{ app.when | date:'Y-m-d'}}</td>
-        <td>{{ app.company }}</td>
-        <td>{{ app.title }}</td>
-        <td>{{ app.active }}</td>
-        <td><a href="{% url 'applications:application-details' appid=app.id %}"><button>View/Edit</button></a></td>
-        </tr>
-    {% endfor %}
-    </tbody>
+    <table id="jobapplications" border="1">
     </table>
 {% endblock %}
 
-{% block js %}
-$(document).ready(function(){
-    $('#applications-summary').DataTable({
-        "columnDefs": [{
-            "targets": [0],
-            "visible": false,
-            "searchable": false
-        }],
-        "order": [
-            [ 0, 'desc' ],
-        ],
-    });
-});
+{% block additional_scripts %}
+    <script src="{% static '/js/applications.js' %}"></script>
 {% endblock %}
