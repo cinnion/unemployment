@@ -1,5 +1,5 @@
-$(document).ready(function(){
-    $('#jobapplications').DataTable({
+$(document).ready(function () {
+    const table = $('#jobapplications').DataTable({
         ajax: {
             url: '/api/jobapplications/',
             dataSrc: 'job_applications'
@@ -8,6 +8,12 @@ $(document).ready(function(){
         processing: true,
         rowId: 'id',
         'columns': [
+            {
+                class: 'dt-control',
+                orderable: false,
+                data: null,
+                defaultContent: '',
+            },
             {
                 data: 'id',
                 name: 'id',
@@ -64,8 +70,62 @@ $(document).ready(function(){
             }
         ],
         'order': [
-            [ 1, 'desc' ],
-            [ 2, 'asc' ],
+            [1, 'desc'],
+            [2, 'asc'],
         ],
+    });
+
+
+    const applicationDetailRows = [];
+
+    function applicationDetailFormat(d) {
+        let retval = 'Company: ' + d.company + '<br>' +
+            'Job Title: ' + d.title + '<br>';
+
+        if (d.posting != '') {
+            retval += 'Job posting: <a href="' + d.posting + '" target="_blank">' + d.posting + '</a><br>';
+        }
+
+        if (d.confirm != '') {
+            retval += 'Confirmation: <a href="' + d.confirm + '" target="_blank">' + d.confirm + '</a><br>';
+        }
+
+        if (d.notes != '') {
+            retval += 'Notes: ' + d.notes + '<br>';
+        }
+
+        return (retval);
+    }
+
+    table.on('click', 'tbody td.dt-control', function () {
+        let tr = event.target.closest('tr');
+        let row = table.row(tr);
+        let idx = applicationDetailRows.indexOf(tr.id)
+
+        if (row.child.isShown()) {
+            tr.classList.remove('details');
+            row.child.hide();
+
+            // Remove from the 'open' array
+            applicationDetailRows.splice(idx, 1);
+        } else {
+            tr.classList.add('details');
+            row.child(applicationDetailFormat(row.data())).show();
+
+            // Add to the 'open' array
+            if (idx === -1) {
+                applicationDetailRows.push(tr.id);
+            }
+        }
+    });
+
+    table.on('draw', () => {
+        applicationDetailRows.forEach((id, i) => {
+            let el = document.querySelector('#' + id + ' td.dt-control');
+
+            if (el) {
+                el.dispatchEvent(new Event('click', {bubbles: true}));
+            }
+        });
     });
 });
