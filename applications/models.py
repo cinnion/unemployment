@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.functions import Now
 
+
 class JobApplication(models.Model):
     when = models.DateField(db_default=Now(), db_comment="Date of application.")
     company = models.CharField(max_length=64, db_comment="Name of company.")

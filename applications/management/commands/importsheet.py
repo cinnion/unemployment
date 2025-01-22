@@ -31,11 +31,11 @@ class Command(BaseCommand):
             else:
                 year, month, day = dateParts
 
-            sqlDate= "{}-{}-{}".format(year, month, day)
+            sqlDate = "{}-{}-{}".format(year, month, day)
 
             app = JobApplication()
             app.when = sqlDate
-            if row[1] == '1' or row[1]=='':
+            if row[1] == '1' or row[1] == '':
                 app.active = True
             else:
                 app.active = False

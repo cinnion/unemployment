@@ -1,6 +1,6 @@
 from typing import List, Union
 
-from django.urls import path,  URLResolver, URLPattern
+from django.urls import path, URLResolver, URLPattern
 
 from applications_api.views import JobApplications, JobApplicationDetail
 

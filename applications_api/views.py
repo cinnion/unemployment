@@ -95,7 +95,7 @@ class JobApplicationDetail(generics.GenericAPIView):
     def get_application(self, pk):
         try:
             return JobApplication.objects.get(pk=pk)
-        except Exception as _e:
+        except Exception:
             return None
 
     def get(self, request, pk):
