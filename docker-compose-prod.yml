@@ -1,0 +1,29 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./config/web/Dockerfile.prod
+    image: registry.home.ka8zrt.com:5000/web:latest
+    command: gunicorn unemployment.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/var/www/unemployment/staticfiles
+      - media_volume:/var/www/unemployment/mediafiles
+    expose:
+      - 8000
+    env_file:
+      - ./config/.env.prod
+
+  nginx:
+    build:
+      context: ./config/nginx
+      dockerfile: Dockerfile
+    volumes:
+      - static_volume:/var/www/unemployment/staticfiles
+      - media_volume:/var/www/unemployment/mediafiles
+    ports:
+      - 1337:80
+    depends_on:
+      - web
+volumes:
+  static_volume:
+  media_volume:

@@ -1,0 +1,71 @@
+###########
+# BUILDER #
+###########
+
+# pull official base image
+FROM python:3.11-alpine AS builder
+
+# Set the user
+USER root
+
+# set work directory
+WORKDIR /usr/src/app
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# install psycopg2 dependencies
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev
+
+# Lint
+RUN pip install --upgrade pip
+RUN pip install flake8
+COPY . .
+RUN flake8 --ignore=E501,F401 .
+
+# install dependencies
+COPY ./requirements.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+
+#########
+# FINAL #
+#########
+
+# pull official base image
+FROM python:3.11-alpine
+
+# Create the directory for the app user
+RUN mkdir -p /var/www/unemployment
+
+# Create the app user
+RUN addgroup -S app && adduser -S app -G app
+
+# Create the appropiate directories
+ENV HOME=/var/www/unemployment
+ENV APP_HOME=/var/www/unemployment/web
+RUN mkdir $APP_HOME
+
+WORKDIR $APP_HOME
+
+# Install dependencies
+RUN apk update && apk add libpq
+COPY --from=builder /usr/src/app/wheels /wheels
+COPY --from=builder /usr/src/app/requirements.txt .
+RUN pip install --no-cache /wheels/*
+
+COPY ./config/web/entrypoint.prod.sh .
+RUN chown root:root $APP_HOME/entrypoint.prod.sh
+RUN chmod +x $APP_HOME/entrypoint.prod.sh
+
+# copy project
+COPY . .
+RUN rm -rf config
+#RUN python3 manage.py collectstatic --noinput
+
+# Chown all the files to the app user
+RUN chown -R root:root $APP_HOME
+
+# run entrypoint.sh
+ENTRYPOINT [$APP_HOME/entrypoint.prod.sh]

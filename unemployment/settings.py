@@ -31,7 +31,7 @@ GOOGLE_SPREADSHEET_ID = os.getenv('GOOGLE_SPREADSHEET_ID')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['wing-1.home.ka8zrt.com']
+ALLOWED_HOSTS = [os.getenv('MYHOSTNAME')]
 
 # Application definition
 
@@ -137,8 +137,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
     BASE_DIR / "node_modules",
+    BASE_DIR / "static"
 ]
 
 # Default primary key field type

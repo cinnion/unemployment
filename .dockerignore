@@ -1,0 +1,8 @@
+**/.venv
+**/.git
+.github
+**/.idea
+#**/node_modules
+**/__pycache__/
+**/*~
+.dockerignore
