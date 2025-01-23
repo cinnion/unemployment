@@ -6,20 +6,20 @@ services:
     image: registry.home.ka8zrt.com:5000/web:latest
     command: gunicorn unemployment.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - static_volume:/var/www/unemployment/staticfiles
-      - media_volume:/var/www/unemployment/mediafiles
+      - static_volume:/var/www/unemployment/web/staticfiles
+      - media_volume:/var/www/unemployment/web/mediafiles
     expose:
       - 8000
-    env_file:
-      - ./config/.env.prod
+    #env_file:
+    #  - ./config/.env.prod
 
   nginx:
     build:
       context: ./config/nginx
       dockerfile: Dockerfile
     volumes:
-      - static_volume:/var/www/unemployment/staticfiles
-      - media_volume:/var/www/unemployment/mediafiles
+      - static_volume:/var/www/unemployment/web/staticfiles
+      - media_volume:/var/www/unemployment/web/mediafiles
     ports:
       - 1337:80
     depends_on:

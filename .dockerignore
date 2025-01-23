@@ -6,3 +6,8 @@
 **/__pycache__/
 **/*~
 .dockerignore
+docker-compose.yml
+docker-compose-prod.yml
+samples
+errs
+node_modules

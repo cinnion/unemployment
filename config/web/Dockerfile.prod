@@ -29,6 +29,8 @@ RUN flake8 --ignore=E501,F401 .
 COPY ./requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
 
+RUN apk add nodejs npm && npm install
+
 #########
 # FINAL #
 #########
@@ -53,6 +55,7 @@ WORKDIR $APP_HOME
 RUN apk update && apk add libpq
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
+COPY --from=builder /usr/src/app/node_modules ./node_modules
 RUN pip install --no-cache /wheels/*
 
 COPY ./config/web/entrypoint.prod.sh .
@@ -61,11 +64,12 @@ RUN chmod +x $APP_HOME/entrypoint.prod.sh
 
 # copy project
 COPY . .
+COPY config/.env.prod .env
 RUN rm -rf config
-#RUN python3 manage.py collectstatic --noinput
+RUN python3 manage.py collectstatic --noinput
 
 # Chown all the files to the app user
 RUN chown -R root:root $APP_HOME
 
 # run entrypoint.sh
-ENTRYPOINT [$APP_HOME/entrypoint.prod.sh]
+ENTRYPOINT [ "./entrypoint.prod.sh" ]
