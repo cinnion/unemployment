@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: ./config/web/Dockerfile.prod
-    image: registry.home.ka8zrt.com:5000/web:latest
+    image: registry.home.ka8zrt.com:5000/unemployment-web:latest
     command: gunicorn unemployment.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/var/www/unemployment/web/staticfiles
@@ -17,6 +17,7 @@ services:
     build:
       context: ./config/nginx
       dockerfile: Dockerfile
+    image: registry.home.ka8zrt.com:5000/unemployment-nginx:latest
     volumes:
       - static_volume:/var/www/unemployment/web/staticfiles
       - media_volume:/var/www/unemployment/web/mediafiles
