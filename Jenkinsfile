@@ -25,8 +25,8 @@ pipeline {
             steps {
                 sshagent(credentials: ['jenkins-ssh']) {
                     sh '''
-                        ssh root@r720 'docker run -d registry.home.ka8zrt.com:5000/unemployment-web:latest'
-                        ssh root@r720 'docker run -d registry.home.ka8zrt.com:5000/unemployment-nginx:latest'
+                        scp -p docker-compose-prod.yml root@r720:~/docker-compose/unemployment.yml
+                        ssh root@r720 'docker compose -f ~/docker-compose/unemployment.yml up -d'
                     '''
                 }
             }
