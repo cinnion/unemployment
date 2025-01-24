@@ -10,7 +10,6 @@ pipeline {
                 ]) {
                     sh 'rm -f config/.env.prod'
                     sh 'cp "\$credvar" config/.env.prod'
-                    sh 'cat config/.env.prod'
                     sh 'docker compose -f docker-compose-prod.yml build'
                 }
             }
