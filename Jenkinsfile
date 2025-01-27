@@ -25,7 +25,7 @@ pipeline {
                 sshagent(credentials: ['jenkins-ssh']) {
                     sh '''
                         scp -p docker-compose-prod.yml root@r720:~/docker-compose/unemployment.yml
-                        ssh root@r720 'docker compose -f ~/docker-compose/unemployment.yml up -d'
+                        ssh root@r720 'docker compose -f ~/docker-compose/unemployment.yml up -d --pull always'
                     '''
                 }
             }
