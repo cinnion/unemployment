@@ -16,8 +16,8 @@ pipeline {
         }
         stage('Push') {
             steps {
-                sh "docker push registry.home.ka8zrt.com:5000/unemployment-web:latest"
-                sh "docker push registry.home.ka8zrt.com:5000/unemployment-nginx:latest"
+                sh "docker push registry.home.ka8zrt.com:5000/unemployment-web"
+                sh "docker push registry.home.ka8zrt.com:5000/unemployment-nginx"
             }
         }
         stage('Deploy') {
