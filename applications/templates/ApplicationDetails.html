@@ -2,12 +2,18 @@
 
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block title %}
     Application Details
 {% endblock %}
 
+{% block additional_css %}
+    <link href="{% static 'bootstrap5/src/css/bootstrap.min.css' %}" rel="stylesheet" />
+{% endblock %}
+
 {% block content %}
+
     <h1>Application Detail</h1>
     <form id="rendered-form" method="post">
         {% csrf_token %}

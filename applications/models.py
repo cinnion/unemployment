@@ -1,9 +1,9 @@
 from django.db import models
-from django.db.models.functions import Now
+from django.utils.timezone import now
 
 
 class JobApplication(models.Model):
-    when = models.DateField(db_default=Now(), db_comment="Date of application.")
+    when = models.DateField(default=now, blank=True, db_comment="Date of application.")
     company = models.CharField(max_length=64, db_comment="Name of company.")
     title = models.CharField(max_length=128, blank=True, db_comment="Job title.")
     posting = models.URLField(blank=True, db_comment="URL of job posting, if applicable.")

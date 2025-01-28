@@ -15,6 +15,7 @@
   "author": "Doug Needham <douglas.w.needham@gmail.com>",
   "license": "BSD-3-Clause",
   "devDependencies": {
+    "bootstrap5": "^1.1.9",
     "webpack": "^5.97.1",
     "webpack-bundle-tracker": "^3.1.1",
     "webpack-cli": "^6.0.1"

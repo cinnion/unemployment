@@ -6,6 +6,7 @@ $(document).ready(function () {
         },
         serverSide: true,
         processing: true,
+        stateSave: true,
         rowId: 'id',
         'columns': [
             {
@@ -73,6 +74,18 @@ $(document).ready(function () {
             [1, 'desc'],
             [2, 'asc'],
         ],
+        layout: {
+            top1End: function () {
+                let toolbar = document.createElement('div');
+                toolbar.innerHTML = '<a href="/applications/new-application/"><button id="add">Add</button></a>';
+
+                return toolbar;
+            },
+            topStart: 'pageLength',
+            topEnd: 'search',
+            bottomStart: 'info',
+            bottomEnd: 'paging',
+        }
     });
 
 
