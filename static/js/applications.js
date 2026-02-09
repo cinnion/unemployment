@@ -37,6 +37,12 @@ $(document).ready(function () {
                 data: 'title',
                 name: 'title',
                 title: 'Job Title',
+                render: function(data, type, row, meta) {
+                    if (type === 'display') {
+                        return '<a href="' + row.posting + '" target="new">' + data + '</a>';
+                    }
+                    return data;
+                }
             },
             {
                 data: 'posting',
