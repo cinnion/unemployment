@@ -1,19 +1,16 @@
 pipeline {
     agent any
+    environment {
+        REGISTRY = 'registry.ka8zrt.com:5000'
+        TAG = "${env.BUILD_ID}"
+    }
     stages {
         stage('Build') {
             steps {
-                withCredentials([
-                    file(
-                        credentialsId: 'unemployment-prod-env',
-                        variable: 'credvar')
-                ]) {
-                    sh 'rm -f config/.env.prod'
-                    sh 'cp "\$credvar" config/.env.prod'
-                    sh 'docker compose -f docker-compose-prod.yml build'
-                }
+                sh 'docker compose -f docker-compose-prod.yml -p unemployment build'
             }
         }
+        /*
         stage('Push') {
             steps {
                 sh "docker push registry.home.ka8zrt.com:5000/unemployment-web"
@@ -30,5 +27,6 @@ pipeline {
                 }
             }
         }
+        */
     }
 }
