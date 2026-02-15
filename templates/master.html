@@ -21,6 +21,7 @@
     <nav>
         <a href="{% url "homepage" %}">Home</a> |
         <a href="{% url "applications:application-list" %}">Job Applications</a> |
+        <a href="{% url "about" %}">About</a>
     </nav>
     {% block subnav %}
     {% endblock %}
@@ -30,8 +31,4 @@
         {% endblock %}
     </div>
 </body>
-<footer>
-    <p>Build ID: {{ BUILD_INFO.BUILD_ID }} (Commit: {{ BUILD_INFO.GIT_COMMIT }}</p>
-    <p>Last Built: {{ BUILD_INFO.BUILD_DATE }}</p>
-</footer>
 </html>

@@ -1,0 +1,22 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}
+About this application
+{% endblock %}
+
+{% block content %}
+    <h1>About this application</h1>
+
+    <p>This application is Copyright &copy; 2024-2026 Douglas Wade Needham. See the
+       <a href="https://github.com/cinnion/unemployment/blob/main/LICENSE">LICENSE</a> file for details.
+    </p>
+
+    <p>Build ID: {{ BUILD_INFO.BUILD_ID }} (Commit: {{ BUILD_INFO.GIT_COMMIT }}</p>
+    <p>Build Number: {{  BUILD_INFO.BUILD_NUMBER }}</p>
+    <p>Job Name: {{ BUILD_INFO.JOB_NAME }}</p>
+    <p>Build URL: {{ BUILD_INFO.BUILD_URL }}</p>
+    <p>Git Branch: {{ BUILD_INFO.GIT_BRANCH }}</p>
+    <p>Last Built: {{ BUILD_INFO.BUILD_DATE }}</p>
+
+{% endblock %}
