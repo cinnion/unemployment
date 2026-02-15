@@ -8,6 +8,8 @@
 .dockerignore
 docker-compose.yml
 docker-compose-prod.yml
+unemployment-docker.yml
+unemployment-beta.yml
 samples
 errs
 node_modules
