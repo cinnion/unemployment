@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   web:
     build:
@@ -21,7 +19,7 @@ services:
         condition: on-failure
       placement:
         constraints:
-          - node.hostname == docker
+          - node.hostname == ${DOCKER_NODE}
     secrets:
       - source: unemployment_env
         target: /var/www/unemployment/web/.env
@@ -51,7 +49,7 @@ services:
         condition: on-failure
       placement:
         constraints:
-          - node.hostname == docker
+          - node.hostname == ${DOCKER_NODE}
 
 
 volumes:
