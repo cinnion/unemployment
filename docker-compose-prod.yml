@@ -2,7 +2,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: ./config/web/Dockerfile.prod
+      dockerfile: ./docker/web/Dockerfile.prod
       tags:
         - ${REGISTRY}/unemployment-web:${TAG}
         - ${REGISTRY}/unemployment-web:latest
@@ -30,7 +30,7 @@ services:
 
   nginx:
     build:
-      context: ./config/nginx
+      context: ./docker/nginx
       dockerfile: Dockerfile
       tags:
         - ${REGISTRY}/unemployment-nginx:${TAG}
