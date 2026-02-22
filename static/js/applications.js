@@ -66,6 +66,13 @@ $(document).ready(function () {
                 data: 'active',
                 name: 'active',
                 title: 'Still active?',
+                render: function(data, type, row) {
+                    if (data === true) {
+                        return 'Yes';
+                    } else {
+                        return 'No';
+                    }
+                },
                 width: '100px',
             },
             {
