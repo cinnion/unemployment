@@ -28,14 +28,14 @@ services:
         gid: '0'
 
 
-  nginx:
+  web:
     build:
-      context: ./docker/nginx
+      context: ./docker/web
       dockerfile: Dockerfile
       tags:
-        - ${REGISTRY}/unemployment-nginx:${TAG}
-        - ${REGISTRY}/unemployment-nginx:latest
-    image: ${REGISTRY}/unemployment-nginx
+        - ${REGISTRY}/unemployment-web:${TAG}
+        - ${REGISTRY}/unemployment-web:latest
+    image: ${REGISTRY}/unemployment-web
     volumes:
       - static_volume:/var/www/unemployment/py-wsgi/staticfiles
       - media_volume:/var/www/unemployment/py-wsgi/mediafiles
