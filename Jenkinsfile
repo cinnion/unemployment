@@ -63,10 +63,10 @@ pipeline {
 
         stage('Push') {
             steps {
+                sh "docker push ${REGISTRY}/unemployment-py-wsgi:${TAG}"
+                sh "docker push ${REGISTRY}/unemployment-py-wsgi:latest"
                 sh "docker push ${REGISTRY}/unemployment-web:${TAG}"
                 sh "docker push ${REGISTRY}/unemployment-web:latest"
-                sh "docker push ${REGISTRY}/unemployment-nginx:${TAG}"
-                sh "docker push ${REGISTRY}/unemployment-nginx:latest"
             }
         }
 

@@ -64,13 +64,13 @@ COPY --from=builder /usr/src/app/requirements.txt .
 COPY --from=builder /usr/src/app/node_modules ./node_modules
 RUN pip install --no-cache /wheels/*
 
-COPY ./config/web/entrypoint.sh .
+COPY ./docker/py-wsgi/entrypoint.sh .
 RUN chown root:root $APP_HOME/entrypoint.sh
 RUN chmod +x $APP_HOME/entrypoint.sh
 
 # copy project
 COPY . .
-RUN rm -rf config
+RUN rm -rf docker
 RUN python3 manage.py collectstatic --noinput
 
 # Chown all the files to the app user

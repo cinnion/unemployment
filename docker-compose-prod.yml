@@ -9,8 +9,8 @@ services:
     image: ${REGISTRY}/unemployment-py-wsgi
     command: gunicorn unemployment.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - static_volume:/var/www/unemployment/py-wsgi/staticfiles
-      - media_volume:/var/www/unemployment/py-wsgi/mediafiles
+      - static_volume:/var/www/unemployment/web/staticfiles
+      - media_volume:/var/www/unemployment/web/mediafiles
     ports:
       - 8000:8000
     deploy:
@@ -22,7 +22,7 @@ services:
           - node.hostname == ${DOCKER_NODE}
     secrets:
       - source: unemployment_env
-        target: /var/www/unemployment/py-wsgi/.env
+        target: /var/www/unemployment/web/.env
         mode: 0400
         uid: '0'
         gid: '0'
@@ -37,8 +37,8 @@ services:
         - ${REGISTRY}/unemployment-web:latest
     image: ${REGISTRY}/unemployment-web
     volumes:
-      - static_volume:/var/www/unemployment/py-wsgi/staticfiles
-      - media_volume:/var/www/unemployment/py-wsgi/mediafiles
+      - static_volume:/var/www/unemployment/web/staticfiles
+      - media_volume:/var/www/unemployment/web/mediafiles
     ports:
       - 1337:80
     depends_on:
