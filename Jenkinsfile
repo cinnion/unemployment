@@ -76,9 +76,12 @@ pipeline {
                     sh '''
                         scp -p unemployment-docker.yml root@docker:~/docker-compose/unemployment.yml
                         ssh root@docker 'docker stack deploy --detach -c ~/docker-compose/unemployment.yml unemployment'
+                        ssh root@docker 'docker exec $(docker ps --filter name=unemployment_py-wsgi -q) /usr/local/bin/python3 manage.py collectstatic --noinput'
 
                         scp -p unemployment-beta.yml root@beta:~/docker-compose/unemployment.yml
                         ssh root@beta 'docker stack deploy --detach -c ~/docker-compose/unemployment.yml unemployment'
+                        ssh root@beta 'docker exec $(docker ps --filter name=unemployment_py-wsgi -q) /usr/local/bin/python3 manage.py collectstatic --noinput'
+
                     '''
                 }
             }
