@@ -64,7 +64,7 @@ ENV TZ=America/New_York
 RUN apk update && apk add libpq
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
-COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app/static static
 RUN pip install --no-cache /wheels/*
 
 COPY ./docker/py-wsgi/entrypoint.sh .
