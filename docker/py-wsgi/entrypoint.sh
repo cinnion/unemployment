@@ -16,6 +16,6 @@ python manage.py migrate
 
 # Update static files
 rm -rf staticfiles/*
-python migrate.py collectstatic --noinput
+python manage.py collectstatic --noinput
 
 exec "$@"
