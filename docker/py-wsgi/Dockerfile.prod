@@ -31,6 +31,9 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requir
 
 RUN apk add nodejs npm && npm install
 
+# Build our webpack
+RUN npm run build
+
 #########
 # FINAL #
 #########
