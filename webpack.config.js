@@ -2,10 +2,13 @@ const webpack = require('webpack');
 const path = require('path');
 
 const config = {
-    entry: path.resolve(__dirname, 'unemployment', 'js/index.jsx'),
+    entry: {
+        bundle: [path.resolve(__dirname, 'unemployment', 'js/index.jsx')],
+        application_details: [path.resolve(__dirname, 'applications', 'js/details.jsx')]
+    },
     output: {
         path: path.resolve(__dirname, 'static'),
-        filename: 'bundle.js',
+        filename: '[name].js',
     },
     module: {
         rules: [
