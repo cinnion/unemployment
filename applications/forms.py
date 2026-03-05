@@ -3,6 +3,7 @@ from django import forms
 
 from . import models
 
+
 class DateInput(forms.DateInput):
     input_type = 'date'
 
@@ -26,7 +27,7 @@ class EditApplication(ModelForm):
         model = models.JobApplication
         exclude = ['id']
 
-        widgets =  {
+        widgets = {
             'when': DateInput(),
             'rejected': DateInput(),
         }

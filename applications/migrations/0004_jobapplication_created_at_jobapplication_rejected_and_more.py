@@ -3,6 +3,7 @@
 from django.db import migrations, models
 from django.db.models import F
 
+
 def copy_value_from_when_to_created_at(apps, schema_editor):
     """Use the value from the when field to initialze the created_at field while adding it."""
 
