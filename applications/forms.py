@@ -30,20 +30,3 @@ class EditApplication(ModelForm):
             'when': DateInput(),
             'rejected': DateInput(),
         }
-
-    def __init__(self, *args, **kwargs):
-        """
-        Make the created_at and updated_at fields read-only.
-        """
-        super(EditApplication, self).__init__(*args, **kwargs)
-
-        # If the form is bound to an existing instance
-        if self.instance and self.instance.pk:
-            if 'created_at' in self.fields:
-                self.fields['created_at'].widget.attrs['readonly'] = True
-                self.fields['created_at'].required = False
-                self.fields['created_at'].disabled = True
-            if 'updated_at' in self.fields:
-                self.fields['updated_at'].widget.attrs['readonly'] = True
-                self.fields['updated_at'].required = False
-                self.fields['updated_at'].disabled = True
