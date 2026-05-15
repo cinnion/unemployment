@@ -1,6 +1,8 @@
 """
 Our form for a job application, with a class to allow us to have Date fields.
 """
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Div
 from django import forms
 from django.forms import ModelForm
 
@@ -40,3 +42,36 @@ class EditApplication(ModelForm):
             "when": DateInput(),
             "rejected": DateInput(),
         }
+
+    def __init__(self, *args, **kwargs):
+        """
+        Initialize certain aspects of the form.
+
+        Args:
+            *args (Any): Any positional parameters such as data, supplied to the parent class.
+            **kwargs: And parameters supplied as keyword arguments.
+        """
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_id = "rendered-form"
+        self.helper.form_method = 'post'
+        self.helper.layout = Layout(
+            Div(
+                "when",
+                "company",
+                "title",
+                "posting",
+                "confirm",
+                "notes",
+                "active",
+                "interviews",
+                "rejected",
+
+                css_class="field-wrapper",
+            ),
+            Div(
+                Submit("submit", "Submit Application"),
+
+                css_class="button-wrapper"
+            ),
+        )

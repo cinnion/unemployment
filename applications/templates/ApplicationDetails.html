@@ -8,19 +8,5 @@
 
 {% block content %}
     <h1>Application Detail</h1>
-    <form id="rendered-form" method="post">
-        {% csrf_token %}
-
-        {{ form.when | as_crispy_field }}
-        {{ form.company | as_crispy_field }}
-        {{ form.title | as_crispy_field }}
-        {{ form.posting | as_crispy_field }}
-        {{ form.confirm | as_crispy_field }}
-        {{ form.notes | as_crispy_field }}
-        {{ form.active | as_crispy_field }}
-        {{ form.rejected | as_crispy_field }}
-        {{ form.interviews | as_crispy_field }}
-
-        <button class="form-submit">Save Application</button>
-    </form>
+    {% crispy form %}
 {% endblock %}
