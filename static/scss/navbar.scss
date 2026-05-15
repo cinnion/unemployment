@@ -1,3 +1,9 @@
+nav.navbar {
+    position:           sticky;     /* Stick to the very top of the page */
+    top:                0;
+    z-index:            1000;       /* Stay above everything */
+}
+
 .navbar li.nav-item a.nav-link {
     display:            inline;
 }
