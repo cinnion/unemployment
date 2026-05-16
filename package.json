@@ -29,6 +29,9 @@
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.2.0",
+    "@fortawesome/free-regular-svg-icons": "^7.2.0",
+    "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "datatables.net": "^2.2.1",
     "datatables.net-jqui": "^2.2.1",
     "jquery": "^3.7.1",

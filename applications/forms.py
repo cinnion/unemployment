@@ -1,10 +1,12 @@
 """
 Our form for a job application, with a class to allow us to have Date fields.
 """
+from crispy_forms.bootstrap import AppendedText
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Div
 from django import forms
 from django.forms import ModelForm
+from django.utils.safestring import mark_safe
 
 from . import models
 
@@ -60,7 +62,7 @@ class EditApplication(ModelForm):
                 "when",
                 "company",
                 "title",
-                "posting",
+                AppendedText('posting', mark_safe('<i id="scrape-post" class="fa-solid fa-cloud-arrow-down"></i>')),
                 "confirm",
                 "notes",
                 "active",

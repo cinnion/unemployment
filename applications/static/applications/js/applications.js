@@ -154,4 +154,14 @@ $(document).ready(function () {
             }
         });
     });
+
+    $("#scrape-post").on("click", function() {
+        const $svg = $(this);
+
+        const $input = $svg.closest("span.input-group-text").siblings('input');
+
+        const $value = $input.val();
+
+        console.log("Value is ", $value);
+    });
 });

@@ -11,3 +11,12 @@ form div.button-wrapper {
     bottom:                     0;
     z-index:                    100;
 }
+
+form #scrape-post {
+    transition:                 all 0.1s ease-out;
+    cursor:                     pointer;
+}
+
+form #scrape-post:active {
+    transform:                  scale(0.8) translateY(4px);
+}

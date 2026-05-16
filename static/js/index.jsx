@@ -11,6 +11,10 @@ import "../scss/custom.scss";
 // Import the Bootstrap JavaScript plugins.
 import "bootstrap/js/dist/dropdown.js";
 
+// Import our fontawesome icons
+import { library, dom } from "@fortawesome/fontawesome-svg-core";
+import { faCloudArrowDown as fasCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
+
 // Import Cupertino theme CSS
 import "jquery-ui/dist/themes/cupertino/jquery-ui.css";
 import "jquery-ui/dist/themes/cupertino/theme.css";
@@ -25,3 +29,8 @@ import "@applications_static/js/applications.js";
 import "@applications_static/css/applications.css";
 
 import "./logout";
+
+library.add(fasCloudArrowDown);
+
+// Automatically find any <i> tags and replace them with <svg>
+dom.watch();
