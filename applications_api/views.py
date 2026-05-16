@@ -20,7 +20,7 @@ class JobApplications(generics.GenericAPIView):
     """
     serializer_class = JobApplicationSerializer
     permission_classes = [IsAuthenticated]
-    http_method_names = ['get']
+    http_method_names = ["get"]
 
     def get_queryset(self) -> QuerySet:
         """
@@ -43,8 +43,8 @@ class JobApplications(generics.GenericAPIView):
         name = request.GET.get(f"order[{i}][name]")
         while name is not None:
             direction = request.GET.get(f"order[{i}][dir]")
-            if direction == 'desc':
-                sort_order.append('-' + name)
+            if direction == "desc":
+                sort_order.append("-" + name)
             else:
                 sort_order.append(name)
             i += 1
@@ -100,7 +100,7 @@ class JobApplications(generics.GenericAPIView):
         """
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            serializer.validated_data['when'] = date.today()
+            serializer.validated_data["when"] = date.today()
             serializer.save()
             return Response(
                 {
@@ -147,7 +147,7 @@ class JobApplicationDetail(generics.GenericAPIView):  # pragma: no cover
 
     def get(self, request: Request, pk: int) -> Response:
         """
-        A HTTP get handler to get a job application.
+        HTTP get handler to get a job application.
 
         Args:
             request (Request): Our request
@@ -224,7 +224,7 @@ class JobApplicationDetail(generics.GenericAPIView):  # pragma: no cover
             pk (int): The primary key.
 
         Returns:
-            The reponse object.
+            The response object.
 
         """
         job_application = self.get_application(pk=pk)
