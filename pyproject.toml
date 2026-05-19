@@ -84,10 +84,14 @@ dev = [
     "pylint-django==2.7.0",
     # Lint - Add specific rule ignores based on the file.
     "pylint-per-file-ignores==3.2.1",
-    # To give us parameterized unit tests in unittest.
-    "unittest-parametrize==1.8.0",
+    # Setuptools-scm, for integrating our dynamic versioning with git tags.
+    "setuptools-scm>=10.0.5",
+    # Version bump tool
+    "tbump>=6.11.0",
     # Towncrier
     "towncrier>=25.8.0",
+    # To give us parameterized unit tests in unittest.
+    "unittest-parametrize==1.8.0",
 ]
 
 [tool.black]
@@ -239,6 +243,56 @@ py-modules = [
     "applications_ini",
     "job_application_tracker",
 ]
+
+[tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+#version_scheme = "release-branch-semver"	# Uses the branch name.
+
+[tool.tbump]
+github_url = "https://github.com/cinnion/job-application-tracker/"
+
+[tool.tbump.version]
+current = "2.0.2"
+
+# Example of a semver regexp.
+# Make sure this matches current_version before
+# using tbump
+regex = '''
+  (?P<major>\d+)
+  \.
+  (?P<minor>\d+)
+  \.
+  (?P<patch>\d+)
+  '''
+
+[tool.tbump.git]
+message_template = "Bump to {new_version}"
+tag_template = "v{new_version}"
+
+# For each file to patch, add a [[tool.tbump.file]] config
+# section containing the path of the file, relative to the
+# tbump.toml location.
+[[tool.tbump.file]]
+src = "pyproject.toml"
+version_template = "doc/whatsnew/{major}/{major}.{minor}/index.rst"
+search = 'filename = "{current_version}"'
+
+# You can specify a list of commands to
+# run after the files have been patched
+# and before the git commit is made
+
+#  [[tool.tbump.before_commit]]
+#  name = "check changelog"
+#  cmd = "grep -q {new_version} Changelog.rst"
+[[tool.tbump.before_commit]]
+name = "Build towncrier files"
+cmd = "towncrier build --draft --version={new_version} > draft.md"
+
+# Or run some commands after the git tag and the branch
+# have been pushed:
+#  [[tool.tbump.after_push]]
+#  name = "publish"
+#  cmd = "./publish.sh"
 
 [tool.towncrier]
 package = "job_application_tracker"
