@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools",  "setuptools-scm"]
 build_backend = "setuptools.build_meta"
 
 [project]
@@ -78,6 +78,8 @@ dev = [
     "pylint-per-file-ignores==3.2.1",
     # To give us parameterized unit tests in unittest.
     "unittest-parametrize==1.8.0",
+    # Towncrier
+    "towncrier>=25.8.0",
 ]
 
 [tool.coverage.run]
@@ -170,3 +172,41 @@ py-modules = [
     "applications_ini",
     "job_application_tracker",
 ]
+
+[tool.towncrier]
+package = "job_application_tracker"
+directory = "doc/whatsnew/fragments"
+filename = "doc/whatsnew/2/2.0/index.rst"
+template = "doc/whatsnew/fragments/_template.rst"
+issue_format = "`#{issue} <https://github.com/cinnion/job-application-tracker/issues/{issue}>`_"
+wrap = false
+
+[[tool.towncrier.type]]
+directory = "feature"
+name = "New Features"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "bugfix"
+name = "Other Bug Fixes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "doc"
+name = "Documentation Changes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "other"
+name = "Other Changes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "internal"
+name = "Internal Changes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "performance"
+name = "Performance Improvements"
+showcontent = true
