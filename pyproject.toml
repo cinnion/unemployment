@@ -15,44 +15,32 @@ authors = [
 dependencies = [
     # Django
     "Django >= 6.0.4",
-
     # Django allauth
     "django-allauth@git+https://codeberg.org/cinnion/django-allauth.git@bugfixes",
-
     # Advanced .env support
     "django-environ >= 0.13.0",
-
     # Webpack
     "django-webpack-loader >= 3.2.3",
-
     # Password validators
     "django-password-validators >= 1.7.3",
-
     # Crispy Forms
     "crispy-bootstrap5 >= 2026.3",
     "django-crispy-forms >= 2.6",
-
     # For DataTable support
     "django-ajax-datatable >= 4.5.0",
     "djangorestframework >= 3.17.1",
-
     # For tweaking form widgets
     "django-widget-tweaks >= 1.5.1",
-
     # Google sheet access
     "google-api-python-client >= 2.194.0",
     "google-auth-oauthlib >= 1.3.1",
     "google-cloud-api-keys >= 0.8.0",
-
     # Status proto mapping for gRPC
     "grpcio-status >= 1.80.0",
-
     # WSGI server
     "gunicorn >= 25.3.0",
-
     # Database
     "psycopg[binary,pool] >= 3.3.3",
-
     # Type hints for Python 3.8+
     "typing_extensions >= 4.15.0",
 ]
@@ -65,17 +53,31 @@ Documentation = "https://www.ka8zrt.com"
 manage = "job_application_tracker.manage:main"
 
 [project.optional-dependencies]
+
+[dependency-groups]
+test = [
+]
 dev = [
-    "coverage >= 7.13.5",                                         # Coverage tool
-    "django-debug-toolbar >= 6.3.0",                              # Django Debug Toolbar
-    "django-extensions >= 4.1",                                   # Django extensions
-    "django-upgrade >= 1.30.0",                                   # Upgrade tool
-    "djangorestframework-stubs >= 3.16.9",                        # DRF stubs for code insight.
-    "pipdeptree >= 2.35.1",                                       # To see dependency tree
-    "pylint[spelling]@git+https://github.com/cinnion/pylint.git@bugfixes",   # Lint
-    "pylint-django==2.7.0",                                     # Lint extensions for django
-    "pylint-per-file-ignores==3.2.1",                           # Lint - Add specific rule ignores based on the file.
-    "unittest-parametrize==1.8.0",                              # To give us parameterized unit tests in unittest.
+    # Also include the dependencies from the test group.
+    {include-group = "test"},
+    # Django Debug Toolbar
+    "django-debug-toolbar >= 6.3.0",
+    # Django extensions
+    "django-extensions >= 4.1",
+    # Upgrade tool
+    "django-upgrade >= 1.30.0",
+    # DRF stubs for code insight.
+    "djangorestframework-stubs >= 3.16.9",
+    # To see dependency tree
+    "pipdeptree >= 2.35.1",
+    # Lint
+    "pylint[spelling]@git+https://github.com/cinnion/pylint.git@bugfixes",
+    # Lint extensions for djangobugfixes",
+    "pylint-django==2.7.0",
+    # Lint - Add specific rule ignores based on the file.
+    "pylint-per-file-ignores==3.2.1",
+    # To give us parameterized unit tests in unittest.
+    "unittest-parametrize==1.8.0",
 ]
 
 [tool.coverage.run]
