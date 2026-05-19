@@ -58,6 +58,8 @@ manage = "job_application_tracker.manage:main"
 test = [
     # Black code formatter
     "black>=26.5.1",
+    # Coverage tool
+    "coverage >= 7.13.5",
     # Mypy static type checker
     "mypy>=2.1.0",
 ]
