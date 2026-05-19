@@ -56,6 +56,8 @@ manage = "job_application_tracker.manage:main"
 
 [dependency-groups]
 test = [
+    # Black code formatter
+    "black>=26.5.1",
     # Mypy static type checker
     "mypy>=2.1.0",
 ]
@@ -83,6 +85,17 @@ dev = [
     # Towncrier
     "towncrier>=25.8.0",
 ]
+
+[tool.black]
+line-length = 120
+target-version = ["py312", "py313"]
+extend-exclude = '''
+   # Exclude folders which should not be formatted
+   \.idea
+   | node_modules
+'''
+check = true
+diff = true
 
 [tool.coverage.run]
 branch = true

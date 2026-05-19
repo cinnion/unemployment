@@ -1,0 +1,34 @@
+repos:
+  - repo: https://github.com/twisted/towncrier
+    rev: 25.8.0  # run 'pre-commit autoupdate' to update
+    hooks:
+      - id: towncrier-check
+
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 26.5.1
+    hooks:
+      - id: black
+        args: [--safe, --quiet]
+        exclude: &fixtures tests(/\w*)*/functional/|tests/input|doc/data/messages|tests(/\w*)*data/
+      - id: black
+        name: black-doc
+        args: [--safe, --quiet]
+        files: doc/data/messages/
+        exclude: |
+          (?x)^(
+            doc/data/messages/b/bad-indentation/bad.py|
+            doc/data/messages/i/inconsistent-quotes/bad.py|
+            doc/data/messages/i/invalid-format-index/bad.py|
+            doc/data/messages/l/line-too-long/bad.py|
+            doc/data/messages/m/missing-final-newline/bad/crlf.py|
+            doc/data/messages/m/missing-final-newline/bad/lf.py|
+            doc/data/messages/m/multiple-statements/bad.py|
+            doc/data/messages/r/redundant-u-string-prefix/bad.py|
+            doc/data/messages/s/superfluous-parens/bad/example_1.py|
+            doc/data/messages/s/syntax-error/bad.py|
+            doc/data/messages/t/too-many-ancestors/bad.py|
+            doc/data/messages/t/trailing-comma-tuple/bad.py|
+            doc/data/messages/t/trailing-newlines/bad.py|
+            doc/data/messages/t/trailing-whitespace/bad.py|
+            doc/data/messages/u/unnecessary-semicolon/bad.py
+          )$
