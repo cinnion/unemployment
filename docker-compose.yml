@@ -60,8 +60,10 @@ services:
         - job-application-tracker-tester
       target: tester
     image: job-application-tracker-tester
+    env_file:
+      - ./.env
     profiles: [testing]
-    command: /bin/sh -c "coverage run --branch ./manage.py test && coverage combine && coverage html && coverage xml && coverage report"
+    command: /bin/sh -c "pylint --disable=fixme . && coverage run --branch ./manage.py test && coverage combine && coverage html && coverage xml && coverage report && ls -la"
 
 #### BUILD ONLY END ####
 

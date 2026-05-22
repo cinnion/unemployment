@@ -21,23 +21,38 @@ USER root
 WORKDIR /usr/src/app
 
 #
+# Install uv
+#
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+#
 # Set environment variables
 #
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 #
-# Install psycopg dependencies we will need to build the wheels and run tests
+# Tell uv to install as non-editable and skip progress
 #
-RUN apk update \
-    && apk add postgresql-dev gcc python3-dev git
+ENV UV_NO_EDITABLE 1
+ENV UV_SKIP_PROGRESS 1
 
 #
-# Copy the application code to /usr/src/app and upgrade PIP
+# Install psycopg dependencies we will need to build the wheels and run tests
+#
+RUN apk --no-progress update \
+    && apk --no-progress add postgresql-dev gcc python3-dev git
+
+#
+# Copy our source in, as we need .git, packages.json, package-lock.json and
+# webpack.config.js at a minimum for our builders, and test will want everything.
 #
 COPY . .
-RUN pip install --upgrade pip
-RUN pip install .
+
+#
+# Install our core dependencies
+#
+RUN uv sync --frozen --no-dev
 
 ############
 # BUILDER2 #
@@ -48,14 +63,9 @@ RUN pip install .
 FROM builder AS builder2
 
 #
-# Create wheels for installation on the production image
-#
-RUN pip wheel --no-cache-dir --wheel-dir /usr/src/app/wheels .
-
-#
 # Install nodejs/npm, then install our node packages
 #
-RUN apk add nodejs npm && npm install
+RUN apk --no-progress add nodejs npm && npm ci
 
 #
 # Build our webpack, which will drop build artifacts into the static subdirectory
@@ -76,14 +86,20 @@ FROM builder AS tester
 WORKDIR /usr/src/app
 
 #
-# Install development requirements
+# Tell uv to install as non-editable and skip progress
 #
-RUN pip install '.[dev]'
+ENV UV_NO_EDITABLE 1
+ENV UV_SKIP_PROGRESS 1
 
 #
-# Run pylint
+# Add our .venv to our path
 #
-RUN pylint --disable=fixme .
+ENV PATH=/usr/src/app/.venv/bin:${PATH}
+
+#
+# Install our dev dependencies
+#
+RUN uv sync --frozen
 
 ##############
 # Production #
@@ -112,6 +128,11 @@ ENV APP_HOME=/var/www/job-application-tracker/web
 RUN mkdir $APP_HOME
 
 #
+# Add our .venv to our path
+#
+ENV PATH=${APP_HOME}/.venv/bin:${PATH}
+
+#
 # Set work directory
 #
 WORKDIR $APP_HOME
@@ -119,7 +140,7 @@ WORKDIR $APP_HOME
 #
 # Install tzdata and set the timezone
 #
-RUN apk add --no-cache tzdata \
+RUN apk --no-progress add --no-cache tzdata \
     && cp /usr/share/zoneinfo/America/New_York /etc/localtime \
     && echo "America/New_York" > /etc/timezone
 ENV TZ=America/New_York
@@ -127,20 +148,18 @@ ENV TZ=America/New_York
 #
 # Install SSL certificates authorities
 #
-RUN apk add --no-cache ca-certificates
+RUN apk --no-progress add --no-cache ca-certificates
 
 #
 # Install OS dependencies
 #
-RUN apk update && apk add libpq
+RUN apk --no-progress update && apk --no-progress add libpq
 
 #
 # Copy over build artifacts from builder2 and install our wheels
 #
-COPY --from=builder2 /usr/src/app/wheels /wheels
+COPY --from=builder2 /usr/src/app/.venv .venv
 COPY --from=builder2 /usr/src/app/static static
-RUN pip install --upgrade pip \
-    && pip install --no-cache --no-index --find-links=/wheels --only-binary=:all: --no-deps /wheels/*
 
 #
 # Copy in the entrypoint script
@@ -150,10 +169,11 @@ RUN chown root:root $APP_HOME/entrypoint.sh
 RUN chmod +x $APP_HOME/entrypoint.sh
 
 #
-# Copy in the project and clean up unwanted files
+# Copy in the project and clean up files like .git and docker, which are only
+# needed for builds.
 #
 COPY . .
-RUN rm -rf docker
+RUN rm -rf .git docker package.json package-lock.json pypackage.toml uv.lock webpack.config.js
 
 #
 # Chown all the files to the app user

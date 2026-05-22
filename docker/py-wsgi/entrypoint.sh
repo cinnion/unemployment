@@ -11,8 +11,11 @@ then
     echo "PostgreSQL started"
 fi
 
+set -x
+env
+set
 # Run the migrations
-python manage.py migrate
+run python manage.py migrate
 
 # Update static files
 rm -rf staticfiles/*

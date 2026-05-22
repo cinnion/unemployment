@@ -43,6 +43,13 @@ pipeline {
                 sh "git status"
             }
         }
+        stage('Debug') {
+            steps {
+                // Debugging
+                sh "env"
+                sh "set"
+            }
+        }
         stage('Get Tag Name') {
             steps {
                 script {

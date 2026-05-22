@@ -1,14 +1,56 @@
-**/.venv
-.github
-**/.idea
-#**/node_modules
-**/__pycache__/
-**/*~
-.dockerignore
+#
+# Don't copy over anything starting with a '.', as that is things like
+# .git, .github, .gitignore, the .idea directory for our IDE, and our
+# .venv, which we will rebuild.
+#
+.*
+
+# But buildtools-scm does need our .git directory
+!.git
+
+#
+# We don't need the docker compose files in the image, or our
+# Jenkinsfile. The .dockerignore file has already been handled.
+#
+# Sadly, we cannot add the docker directory itself, as a few things we
+# want to copy in are under there, and that would prevent the explicit
+# COPY from working.
+#
+Jenkinsfile
 docker-compose.yml
-docker-compose-prod.yml
-job-application-tracker-docker.yml
-job-application-tracker-beta.yml
-samples
-errs
+docker-compose-dev.yml
+
+#
+# Don't copy over a __pycache__ directory from anywhere. We will
+# rebuild what we need.
+#
+**/__pycache__/
+
+#
+# Don't copy over node_modules if we have it, as we will load our own.
+#
 node_modules
+
+#
+# No editor files.
+#
+**/*~
+
+#
+# We don't need the docs or samples in production
+#
+doc
+samples
+
+#
+# We don't need our runserver or refresh scripts, which may have found
+# their way here, or if we are doing the build from our dev environment.
+#
+refresh.sh
+runserver
+
+# Miscellanous garbage which we collect during development, which
+# doesn't happen to begin with a '.'
+errs*
+htmlcov
+coverage.xml
