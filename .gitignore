@@ -34,6 +34,7 @@ share/python-wheels/
 MANIFEST
 node_modules/
 /js/
+.build-out/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
