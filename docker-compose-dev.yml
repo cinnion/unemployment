@@ -2,7 +2,7 @@ services:
   py-wsgi:
     build:
       context: .
-      dockerfile: ./docker/py-wsgi/Dockerfile.prod
+      dockerfile: ./docker/py-wsgi/Dockerfile
       tags:
         - job-application-tracker-py-wsgi:latest
       target: production
@@ -17,7 +17,6 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
-
 
   web:
     build:
@@ -37,7 +36,6 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
-
 
 volumes:
   static_volume:
