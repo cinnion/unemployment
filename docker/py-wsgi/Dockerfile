@@ -52,7 +52,8 @@ COPY . .
 #
 # Install our core dependencies
 #
-RUN uv sync --frozen --no-dev
+RUN --mount=type=cache,dst=/var/cache \
+    uv sync --frozen --no-dev
 
 ############
 # BUILDER2 #
@@ -63,14 +64,21 @@ RUN uv sync --frozen --no-dev
 FROM builder AS builder2
 
 #
+# Environment to point the NPM cache to our cache directory
+#
+ENV npm_config_cache="/var/cache/npm"
+
+#
 # Install nodejs/npm, then install our node packages
 #
-RUN apk --no-progress add nodejs npm && npm ci
+RUN --mount=type=cache,dst=/var/cache \
+    apk --no-progress add nodejs npm && npm ci
 
 #
 # Build our webpack, which will drop build artifacts into the static subdirectory
 #
-RUN npm run build
+RUN --mount=type=cache,dst=/var/cache \
+    npm run build
 
 ##########
 # TESTER #
@@ -99,7 +107,8 @@ ENV PATH=/usr/src/app/.venv/bin:${PATH}
 #
 # Install our dev dependencies
 #
-RUN uv sync --frozen
+RUN --mount=type=cache,dst=/var/cache \
+    uv sync --frozen
 
 ##############
 # Production #

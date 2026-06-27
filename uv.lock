@@ -806,7 +806,7 @@ wheels = [
 
 [[package]]
 name = "job-application-tracker"
-source = { editable = "." }
+source = { virtual = "." }
 dependencies = [
     { name = "crispy-bootstrap5" },
     { name = "django" },

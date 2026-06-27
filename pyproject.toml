@@ -334,3 +334,4 @@ showcontent = true
 
 [tool.uv]
 compile-bytecode = true
+cache-dir = "/var/cache/uv"
