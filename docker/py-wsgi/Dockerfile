@@ -36,6 +36,7 @@ ENV PYTHONUNBUFFERED 1
 #
 ENV UV_NO_EDITABLE 1
 ENV UV_SKIP_PROGRESS 1
+ENV UV_CACHE_DIR "/var/cache/uv"
 
 #
 # Install psycopg dependencies we will need to build the wheels and run tests
@@ -98,6 +99,7 @@ WORKDIR /usr/src/app
 #
 ENV UV_NO_EDITABLE 1
 ENV UV_SKIP_PROGRESS 1
+ENV UV_CACHE_DIR "/var/cache/uv"
 
 #
 # Add our .venv to our path
