@@ -16,7 +16,7 @@ dependencies = [
     # Django
     "Django >= 6.0.4",
     # Django allauth
-    "django-allauth@git+https://codeberg.org/cinnion/django-allauth.git@bugfixes",
+    "django-allauth >= 65.18.0",
     # Advanced .env support
     "django-environ >= 0.13.0",
     # Webpack
