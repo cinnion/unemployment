@@ -286,7 +286,7 @@ search = 'filename = "{current_version}"'
 #  cmd = "grep -q {new_version} Changelog.rst"
 [[tool.tbump.before_commit]]
 name = "Build towncrier files"
-cmd = "towncrier build --draft --version={new_version} > draft.md"
+cmd = "towncrier build --version={new_version}"
 
 # Or run some commands after the git tag and the branch
 # have been pushed:
