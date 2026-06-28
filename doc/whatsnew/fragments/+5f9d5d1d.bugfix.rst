@@ -1,1 +1,0 @@
-Switch back to using django-allauth from pypi after our fix was picked up.

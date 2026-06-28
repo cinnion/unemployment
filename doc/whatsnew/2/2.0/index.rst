@@ -1,3 +1,40 @@
+What's new in Job Application Tracker 2.0.3?
+--------------------------------------------
+Release date: 2026-06-28
+
+
+Other Bug Fixes
+---------------
+
+- Switch back to using django-allauth from pypi after our fix was picked up. ()
+
+
+
+Internal Changes
+----------------
+
+- Changes to Jenkinsfile to debug why branch matching on deploy is not working. ()
+
+- Improve caching within the docker build process of the py-wsgi image. ()
+
+- Made version dynamic in pyproject.toml and moved it to job_application_descriptor __init__.py. ()
+
+- Updated pyproject.toml file to ease use of uv instead of pip. ()
+
+- Updated pyproject.toml to add ``setuptools-scm`` and ``tbump`` for handling versioning. ()
+
+- Updated pyproject.toml to add black and an initial non-modifying configuration for it. ()
+
+- Updated pyproject.toml to add mypy and an initial configuration for it. ()
+
+- Updated pyproject.toml to add new sections and change versions to >= instead of == to make dependency upgrades easier. ()
+
+- Updated pyproject.toml to add pre-commit. ()
+
+- Updated pyproject.toml to reformat dependencies so that comments are not eaten by uv. ()
+
+
+
 What's new in Job Application Tracker 2.0.0?
 --------------------------------------------
 Release date: 2026-05-02

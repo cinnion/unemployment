@@ -252,7 +252,7 @@ version_scheme = "guess-next-dev"
 github_url = "https://github.com/cinnion/job-application-tracker/"
 
 [tool.tbump.version]
-current = "2.0.2"
+current = "2.0.3"
 
 # Example of a semver regexp.
 # Make sure this matches current_version before
