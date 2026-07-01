@@ -51,7 +51,8 @@ const config = {
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
-            'window.jQuery': 'jquery'
+            'window.jQuery': 'jquery',
+            getCookie: [path.resolve(__dirname, "static/js/getCookie.jsx"), "getCookie"],
         })
     ]
 };

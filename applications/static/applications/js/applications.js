@@ -160,8 +160,11 @@ $(document).ready(function () {
 
         const $input = $svg.closest("span.input-group-text").siblings('input');
 
-        const $value = $input.val();
+        const csrftoken = getCookie("csrftoken");
 
-        console.log("Value is ", $value);
+        const value = $input.val();
+
+        console.log("Value is ", value);
+
     });
 });
