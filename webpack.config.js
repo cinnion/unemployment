@@ -43,6 +43,7 @@ const config = {
     resolve: {
         alias: {
             '@applications_static': path.resolve(__dirname, 'applications/static/applications'),
+            '@django-reverse-urls': path.resolve(__dirname, 'static/js/reverse.js'),
         },
         extensions: ['.js', '.jsx', '.css']
     },
@@ -52,6 +53,7 @@ const config = {
             $: 'jquery',
             jQuery: 'jquery',
             'window.jQuery': 'jquery',
+            Urls: [path.resolve(__dirname, 'static/js/reverse.js'), "Urls" ],
             getCookie: [path.resolve(__dirname, "static/js/getCookie.jsx"), "getCookie"],
         })
     ]

@@ -2,6 +2,9 @@
 import $ from "jquery";
 window.jQuery = $;
 
+// Import our status URL data
+import "./reverse";
+
 // Import jQuery UI components
 import "jquery-ui/ui/widgets/datepicker";
 

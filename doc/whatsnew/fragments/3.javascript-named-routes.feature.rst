@@ -1,0 +1,2 @@
+Transition JavaScript code from using statically coded URLs to using
+named based routing directly based on Django's URL files.

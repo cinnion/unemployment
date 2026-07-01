@@ -79,6 +79,7 @@ RUN --mount=type=cache,dst=/var/cache \
 # Build our webpack, which will drop build artifacts into the static subdirectory
 #
 RUN --mount=type=cache,dst=/var/cache \
+    ./manage.py collectstatic_js_reverse && \
     npm run build
 
 ##########

@@ -115,6 +115,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'webpack_loader',
     'widget_tweaks',
+    'django_js_reverse',
 ]
 
 TEMPLATES = [
@@ -327,6 +328,12 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 ##################
 # rest_framework #
 ##################
+
+#####################
+# django-js-reverse #
+#####################
+JS_REVERSE_OUTPUT_PATH = "static/js"
+JS_REVERSE_JS_GLOBAL_OBJECT_NAME = "window"
 
 ##################
 # webpack_loader #

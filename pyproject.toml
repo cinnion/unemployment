@@ -43,6 +43,8 @@ dependencies = [
     "psycopg[binary,pool] >= 3.3.3",
     # Type hints for Python 3.8+
     "typing_extensions >= 4.15.0",
+    # For Javascript URL handling which leverages django.urls
+    "django-js-reverse>=1.0.0",
     # For page scraping.
     "playwright>=1.60.0",
     "beautifulsoup4>=4.15.0",
