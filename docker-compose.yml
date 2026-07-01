@@ -12,7 +12,7 @@ services:
     volumes:
       - static_volume:/var/www/job-application-tracker/web/staticfiles
       - media_volume:/var/www/job-application-tracker/web/mediafiles
-    depends-on:
+    depends_on:
       - obscura
     deploy:
       replicas: 1

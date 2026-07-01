@@ -86,7 +86,7 @@ dev = [
     # To see dependency tree
     "pipdeptree >= 2.35.1",
     # Lint
-    "pylint[spelling] >= 4.0.6",
+    "pylint[spelling]@git+https://github.com/pylint-dev/pylint.git",
     # Lint extensions for djangobugfixes",
     "pylint-django >= 2.7.0",
     # Lint - Add specific rule ignores based on the file.
@@ -109,8 +109,6 @@ extend-exclude = '''
    \.idea
    | node_modules
 '''
-check = true
-diff = true
 
 [tool.coverage.run]
 branch = true
