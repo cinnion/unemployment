@@ -346,3 +346,8 @@ else:
             'LOADER_CLASS': 'webpack_loader.loaders.FakeWebpackLoader',
         }
     }
+
+##################
+# Obscura server #
+##################
+OBSCURA_SERVER_CDP_URL = env('OBSCURA_SERVER_CDP_URL', default='ws://127.0.0.1:9222')

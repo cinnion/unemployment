@@ -210,10 +210,7 @@ pipeline {
 
         stage('Deploy to internal') {
             when {
-                anyOf {
-                    branch 'btest'
-                    branch 'origin/btest'
-                }
+                not { branch 'main' }
             }
             steps {
                 sshagent(credentials: ['jenkins-ssh']) {
@@ -227,7 +224,7 @@ pipeline {
 
         stage('Deploy to production (beta)') {
             when {
-                branch 'origin/main'
+                branch 'main'
             }
             steps {
                 sshagent(credentials: ['jenkins-ssh']) {

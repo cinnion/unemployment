@@ -1,0 +1,3 @@
+Start adding functionallity to take a job post URL with all the tracking
+garbage, and replace it with a clean URL along with filling out the company and
+title from the actual job post.

@@ -5,7 +5,7 @@ from crispy_forms.bootstrap import AppendedText
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Div
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, HiddenInput
 from django.utils.safestring import mark_safe
 
 from . import models
@@ -38,11 +38,13 @@ class EditApplication(ModelForm):
             "active",
             "interviews",
             "rejected",
+            "saved_posting",
         ]
 
         widgets = {
             "when": DateInput(),
             "rejected": DateInput(),
+            "saved_posting": HiddenInput(),
         }
 
     def __init__(self, *args, **kwargs):

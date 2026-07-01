@@ -43,6 +43,9 @@ dependencies = [
     "psycopg[binary,pool] >= 3.3.3",
     # Type hints for Python 3.8+
     "typing_extensions >= 4.15.0",
+    # For page scraping.
+    "playwright>=1.60.0",
+    "beautifulsoup4>=4.15.0",
 ]
 
 [project.urls]
@@ -64,6 +67,8 @@ test = [
     "mypy>=2.1.0",
     # Framework for managing commit hooks.
     "pre-commit>=4.6.0",
+    # For functional testing.
+    "pytest-playwright>=0.8.0",
 ]
 dev = [
     # Also include the dependencies from the test group.

@@ -5,11 +5,12 @@ from typing import List, Union
 
 from django.urls import path, URLResolver, URLPattern
 
-from applications_api.views import JobApplications, JobApplicationDetail
+from applications_api.views import JobApplications, JobApplicationDetail, JobApplicationScraper
 
 app_name = "applications-api"
 
 urlpatterns: List[Union[URLResolver, URLPattern]] = [
     path("", JobApplications.as_view(), name="applications-list"),
-    path("<int:pk>", JobApplicationDetail.as_view(), name="application-details")
+    path("<int:pk>", JobApplicationDetail.as_view(), name="application-details"),
+    path("scrape", JobApplicationScraper.as_view(), name="application-scraper"),
 ]

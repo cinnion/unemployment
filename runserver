@@ -1,3 +1,4 @@
 #!/bin/bash
+docker run -d --name obscura -p 127.0.0.1:9222:9222 h4ckf0r0day/obscura
 xterm -bg black -fg green -T 'manage.py runserver' -e 'python manage.py runserver 0.0.0.0:8000' &
 xterm -bg black -fg green -T 'webpack' -e 'npx webpack --watch' &

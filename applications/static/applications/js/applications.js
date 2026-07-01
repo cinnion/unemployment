@@ -166,5 +166,44 @@ $(document).ready(function () {
 
         console.log("Value is ", value);
 
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/jobapplications/scrape",
+            data: {
+                url: value,
+            },
+            headers: {
+                'X-CSRFToken': csrftoken,
+            },
+        })
+        .done(function (data, textStatus, jqXHR) {
+            console.log("Clean URL: " + data.clean_url);
+            console.log("Post Status: " + data.post_status);
+            console.log("Posting ID: " + data.posting_id);
+            console.log("Company: " + data.company);
+            console.log("Title: " + data.title);
+            console.log("Response Data:" + data);
+            console.log("Status: " + textStatus);
+
+            var $form = $("#rendered-form");
+            $form.find('input[name="company"]').val(data.company);
+            $form.find('input[name="title"]').val(data.title);
+            $form.find('input[name="posting"]').val(data.clean_url);
+            $form.find('input[name="saved_posting"]').val(data.posting_id);
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.responseJSON) {
+                var errorMessage = jqXHR.responseJSON.error;
+                console.log("Error message: " + errorMessage)
+            } else if (jqXHR.responseText) {
+                try {
+                    var rawData = JSON.parse(jqXHR.responseText);
+                    console.log("Parsed error message: ", rawData.error);
+                } catch (e) {
+                    console.log("Plain text error: ", jqXHR.responseText);
+                }
+            }
+        });
+
     });
 });
