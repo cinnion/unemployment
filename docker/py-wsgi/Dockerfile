@@ -8,7 +8,7 @@
 #
 # Pull official base image
 #
-FROM python:3.13-alpine AS builder
+FROM python:3.13-slim-trixie AS builder
 
 #
 # Set the user
@@ -39,10 +39,20 @@ ENV UV_SKIP_PROGRESS 1
 ENV UV_CACHE_DIR "/var/cache/uv"
 
 #
+# Make APT really quiet
+#
+RUN cat << EOD > /etc/apt/apt.conf.d/99no-progress-no-cache
+APT::Color "0";
+APT::Keep-Downloaded-Packages "false";
+Dpkg::Progress-Fancy "0";
+Dpkg::Use-Pty "0";
+EOD
+
+#
 # Install psycopg dependencies we will need to build the wheels and run tests
 #
-RUN apk --no-progress update \
-    && apk --no-progress add postgresql-dev gcc python3-dev git
+RUN apt-get update \
+    && apt-get -y install gcc python3-dev git
 
 #
 # Copy our source in, as we need .git, packages.json, package-lock.json and
@@ -73,7 +83,7 @@ ENV npm_config_cache="/var/cache/npm"
 # Install nodejs/npm, then install our node packages
 #
 RUN --mount=type=cache,dst=/var/cache \
-    apk --no-progress add nodejs npm && npm ci
+    apt-get install nodejs npm && npm ci
 
 #
 # Build our webpack, which will drop build artifacts into the static subdirectory
@@ -120,7 +130,7 @@ RUN --mount=type=cache,dst=/var/cache \
 #
 # pull official base image
 #
-FROM python:3.13-alpine AS production
+FROM python:3.13-slim-trixie AS production
 
 #
 # Create the directory for the app user
@@ -130,7 +140,17 @@ RUN mkdir -p /var/www/job-application-tracker
 #
 # Create the app user
 #
-RUN addgroup -S app && adduser -S app -G app
+RUN adduser --system --group app
+
+#
+# Make APT really quiet
+#
+RUN cat << EOD > /etc/apt/apt.conf.d/99no-progress-no-cache
+APT::Color "0";
+APT::Keep-Downloaded-Packages "false";
+Dpkg::Progress-Fancy "0";
+Dpkg::Use-Pty "0";
+EOD
 
 #
 # Create the appropriate directories
@@ -152,7 +172,7 @@ WORKDIR $APP_HOME
 #
 # Install tzdata and set the timezone
 #
-RUN apk --no-progress add --no-cache tzdata \
+RUN apt-get install tzdata \
     && cp /usr/share/zoneinfo/America/New_York /etc/localtime \
     && echo "America/New_York" > /etc/timezone
 ENV TZ=America/New_York
@@ -160,12 +180,12 @@ ENV TZ=America/New_York
 #
 # Install SSL certificates authorities
 #
-RUN apk --no-progress add --no-cache ca-certificates
+RUN apt-get install ca-certificates
 
 #
 # Install OS dependencies
 #
-RUN apk --no-progress update && apk --no-progress add libpq
+RUN apt-get update && apt-get install libpq5
 
 #
 # Copy over build artifacts from builder2 and install our wheels
