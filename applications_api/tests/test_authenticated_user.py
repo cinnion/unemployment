@@ -63,6 +63,7 @@ class AuthenticatedUserJobApplicationsApiTests(BaseAuthenticatedUserMixin, APITe
             "active": record.active,
             "interviews": record.interviews,
             "rejected": record.rejected,
+            "saved_posting": record.saved_posting,
             "created_at": record.created_at.astimezone().isoformat(),
             "updated_at": record.updated_at.astimezone().isoformat(),
             "user": record.user_id,
