@@ -285,7 +285,7 @@ class JobApplicationScraper(APIView):
         """
         query = parse_qs(query)
 
-        for key, _value in dict(query):
+        for key, _value in dict(query).items():
             if key not in wanted_params:
                 del query[key]
 
@@ -308,30 +308,6 @@ class JobApplicationScraper(APIView):
             f.write(contents)
 
     @staticmethod
-    def get_posting(url: SplitResult) -> tuple[int, str]:
-        """
-        Get the page associated with the url, and save it to disk.
-
-        Args:
-            url: The split URL.
-
-        Returns:
-            The HTML for the main page of the job post.
-        """
-        response = requests.get(url.geturl(), timeout=10)
-
-        if response.status_code == 200:
-            module_dir = Path(__file__).resolve().parent
-            file_path = module_dir / "tests/fixtures" / (url.hostname + ".html")
-            with open(file_path, "w", encoding="utf-8") as f:
-                f.write(response.text)
-        else:
-            logger.warning("Site %s returned a non-200 return code", response.status_code)
-            response.raise_for_status()
-
-        return int(response.status_code), response.text
-
-    @staticmethod
     def get_posting_with_obscura(target_url: str) -> tuple[int, str, str]:
         """
         Use our obscura service to request a job posting page.
@@ -344,22 +320,53 @@ class JobApplicationScraper(APIView):
         """
         obscura_cdp_url: str = settings.OBSCURA_SERVER_CDP_URL
 
+        # Set a default status and content
+        http_status = -1
+        status_text = ""
+        html_content = ""
+
+        # Open our playwright context
         with sync_playwright() as p:
+
             # Connect to obscura
-            browser = p.chromium.connect_over_cdp(obscura_cdp_url)
-
-            # Open a fresh isolated context and page
-            context = browser.new_context()
-            page = context.new_page()
-
-            # Set a default status and content
-            http_status = -1
-            status_text = ""
-            html_content = ""
-
-            # Now try to get the page.
             try:
-                # Send the request.
+                browser = p.chromium.connect_over_cdp(obscura_cdp_url)
+            except Exception as e:
+                logger.error("The connection failed: %s", e)
+                raise RuntimeError("Error getting posting from %s", target_url) from e
+
+            try:
+                # Open a fresh isolated context
+                context = browser.new_context()
+            except Exception as e:
+
+                # Log the error.
+                logger.error("Error getting new browser context: %s", e)
+
+                # Cleanup the browser context.
+                browser.close()
+
+                # And raise an exception to skip all the processing.
+                raise RuntimeError("Error getting posting from %s", target_url) from e
+
+            try:
+                # Open a new page
+                page = context.new_page()
+            except Exception as e:
+
+                # Log the error.
+                logger.error("Error getting new page: %s", e)
+
+                # Cleanup our context and browser.
+                context.close()
+                browser.close()
+
+                # And raise an exception to skip all the processing.
+                raise RuntimeError("Error getting posting from %s", target_url) from e
+
+            # Now try to get the page...
+            try:
+                # send the request.
                 logger.debug("Sending obscura request to target URL: %s", target_url)
                 response = page.goto(target_url, wait_until="networkidle")
 
@@ -367,16 +374,18 @@ class JobApplicationScraper(APIView):
                 html_content = page.content()
                 http_status = response.status
                 status_text = response.status_text
-            except TimeoutError:
-                logger.error("The page operation timed out!")
+            except TimeoutError as e:
+                logger.error("The page operation timed out! %s", e)
+                raise RuntimeError("Timeout error getting page: %s", e) from e
             except Error as e:
                 logger.error("A general Playwright error occurred: %s", e)
+                raise RuntimeError("Playwright error getting page: %s", e) from e
             finally:
                 # Cleanup the session context
                 context.close()
                 browser.close()
 
-            return http_status, status_text, html_content
+        return http_status, status_text, html_content
 
     def handle_dice_url(self, url: SplitResult) -> dict[str, str | int]:
         """
