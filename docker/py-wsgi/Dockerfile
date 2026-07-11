@@ -80,6 +80,11 @@ FROM builder AS builder2
 ENV npm_config_cache="/var/cache/npm"
 
 #
+# Add our .venv to our path
+#
+ENV PATH=/usr/src/app/.venv/bin:${PATH}
+
+#
 # Install nodejs/npm, then install our node packages
 #
 RUN --mount=type=cache,dst=/var/cache \
