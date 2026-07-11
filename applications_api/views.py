@@ -9,7 +9,6 @@ from pathlib import Path
 from typing import List, Optional
 from urllib.parse import urlsplit, SplitResult, parse_qs, urlencode
 
-import requests
 from bs4 import BeautifulSoup
 from django.conf import settings
 from django.db.models.query import QuerySet
@@ -333,7 +332,7 @@ class JobApplicationScraper(APIView):
                 browser = p.chromium.connect_over_cdp(obscura_cdp_url)
             except Exception as e:
                 logger.error("The connection failed: %s", e)
-                raise RuntimeError("Error getting posting from %s", target_url) from e
+                raise RuntimeError(f"Error getting posting from {target_url}") from e
 
             try:
                 # Open a fresh isolated context
@@ -347,7 +346,7 @@ class JobApplicationScraper(APIView):
                 browser.close()
 
                 # And raise an exception to skip all the processing.
-                raise RuntimeError("Error getting posting from %s", target_url) from e
+                raise RuntimeError(f"Error getting posting from {target_url}") from e
 
             try:
                 # Open a new page
@@ -362,7 +361,7 @@ class JobApplicationScraper(APIView):
                 browser.close()
 
                 # And raise an exception to skip all the processing.
-                raise RuntimeError("Error getting posting from %s", target_url) from e
+                raise RuntimeError(f"Error getting posting from {target_url}") from e
 
             # Now try to get the page...
             try:
@@ -376,10 +375,10 @@ class JobApplicationScraper(APIView):
                 status_text = response.status_text
             except TimeoutError as e:
                 logger.error("The page operation timed out! %s", e)
-                raise RuntimeError("Timeout error getting page: %s", e) from e
+                raise RuntimeError(f"Timeout error getting page: {e}") from e
             except Error as e:
                 logger.error("A general Playwright error occurred: %s", e)
-                raise RuntimeError("Playwright error getting page: %s", e) from e
+                raise RuntimeError(f"Playwright error getting page: {e}") from e
             finally:
                 # Cleanup the session context
                 context.close()
