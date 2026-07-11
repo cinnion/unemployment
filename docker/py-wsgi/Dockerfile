@@ -83,7 +83,7 @@ ENV npm_config_cache="/var/cache/npm"
 # Install nodejs/npm, then install our node packages
 #
 RUN --mount=type=cache,dst=/var/cache \
-    apt-get install nodejs npm && npm ci
+    apt-get -y install nodejs npm && npm ci
 
 #
 # Build our webpack, which will drop build artifacts into the static subdirectory
@@ -172,7 +172,7 @@ WORKDIR $APP_HOME
 #
 # Install tzdata and set the timezone
 #
-RUN apt-get install tzdata \
+RUN apt-get -y install tzdata \
     && cp /usr/share/zoneinfo/America/New_York /etc/localtime \
     && echo "America/New_York" > /etc/timezone
 ENV TZ=America/New_York
@@ -180,12 +180,12 @@ ENV TZ=America/New_York
 #
 # Install SSL certificates authorities
 #
-RUN apt-get install ca-certificates
+RUN apt-get -y install ca-certificates
 
 #
 # Install OS dependencies
 #
-RUN apt-get update && apt-get install libpq5
+RUN apt-get update && apt-get -y install libpq5
 
 #
 # Copy over build artifacts from builder2 and install our wheels
