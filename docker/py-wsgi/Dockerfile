@@ -206,11 +206,11 @@ RUN chown root:root $APP_HOME/entrypoint.sh
 RUN chmod +x $APP_HOME/entrypoint.sh
 
 #
-# Copy in the project and clean up files like .git and docker, which are only
-# needed for builds.
+# Copy in the project and clean up files like .env, .git and docker, which are
+# only needed for builds.
 #
 COPY . .
-RUN rm -rf .git docker package.json package-lock.json pypackage.toml uv.lock webpack.config.js
+RUN rm -rf .env .git docker package.json package-lock.json pypackage.toml uv.lock webpack.config.js
 
 #
 # Chown all the files to the app user

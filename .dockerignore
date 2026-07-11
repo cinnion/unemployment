@@ -8,6 +8,9 @@
 # But buildtools-scm does need our .git directory
 !.git
 
+# Our collectstatic_js_reverse step needs the .env file
+!.env
+
 #
 # We don't need the docker compose files in the image, or our
 # Jenkinsfile. The .dockerignore file has already been handled.
