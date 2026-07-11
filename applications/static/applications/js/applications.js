@@ -168,7 +168,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "/api/v1/jobapplications/scrape",
+            url: window.Urls['applications-api:application-scraper'](),
             data: {
                 url: value,
             },
